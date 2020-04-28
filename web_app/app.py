@@ -1,6 +1,8 @@
 from flask import Flask, render_template
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
-from web_app.models import db, Page
+from web_app.models import db, Page, Menu
 
 
 def create_app():
@@ -10,6 +12,10 @@ def create_app():
 
     # file config diambil dari file mode py
     app.config.from_pyfile('settings.py')
+
+    admin = Admin(app, name='Flask-01', template_mode='bootstrap3')
+    admin.add_view(ModelView(Page, db.session))
+    admin.add_view(ModelView(Menu, db.session))
 
     db.init_app(app)
     # "route" alamat url yang akan ditangani oleh app ini
