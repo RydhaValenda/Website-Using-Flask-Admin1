@@ -20,14 +20,17 @@ def create_app():
     db.init_app(app)
     # "route" alamat url yang akan ditangani oleh app ini
     @app.route('/') #decorator(akan memastikan fungsi index akan bisa dipanggil oleh flask)
-    def index():
+    @app.route('/<uri>') #index defined handles without arguments and with argument
+    def index(uri=None):
         # connect to database use sqlalchemy
         page = Page.query.filter_by(id=1).first()
         contents = 'empty'
         if page is not None:
             contents = page.contents
 
-        return render_template('index.html', TITLE='Flask-01', CONTENT=contents)
+        menu = Menu.query.order_by('order')
+
+        return render_template('index.html', TITLE='Flask-01', CONTENT=contents, menu=menu)
 
         # # connect ke database table
         # import psycopg2

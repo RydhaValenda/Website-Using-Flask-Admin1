@@ -12,6 +12,7 @@ class Page(db.Model):
     title = Column(String)
     tag = Column(String)
     contents = Column(String)
+    url = Column(String)
 
 # synchronize tables that don't yet exist in database. even though there is already a class
 # db.create_all()
