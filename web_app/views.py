@@ -21,3 +21,4 @@ class PageModelView(ModelView):
     edit_template = 'admin/ckeditor.html'
 
     # form_columns = ('title', 'contents', 'url')
+# tidak bisa melakukan extend dari template yg ada
