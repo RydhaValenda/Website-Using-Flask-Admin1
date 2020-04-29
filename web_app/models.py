@@ -26,7 +26,7 @@ class Menu(db.Model):
     order =  Column(Integer)
 
     page_id = Column(Integer, ForeignKey('page.id'))
-    page = relationship('Page', backref=backref('Linked from Menu'))
+    page = relationship('Page', backref=backref('Linked from Menu', uselist=False))
 
     def __repr__(self):
         return self.title
