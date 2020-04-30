@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 
 # create object SQLAlchemy and include instan the name of the istant flask object
 from sqlalchemy.orm import relationship, backref
@@ -13,6 +13,7 @@ class Page(db.Model):
     tag = Column(String)
     contents = Column(String)
     url = Column(String)
+    is_homepage = Column(Boolean)
 
 # synchronize tables that don't yet exist in database. even though there is already a class
 # db.create_all()

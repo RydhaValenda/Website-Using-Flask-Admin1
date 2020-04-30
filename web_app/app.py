@@ -23,8 +23,17 @@ def create_app():
     @app.route('/') #decorator(akan memastikan fungsi index akan bisa dipanggil oleh flask)
     @app.route('/<url>') #index defined handles without arguments and with argument
     def index(url=None):
+        print('here',url)
         if url is not None:
+            # /about
             page = Page.query.filter_by(url=url).first()             # connect to database use sqlalchemy
+        else:
+            # /
+            page = Page.query.filter_by(is_homepage=True).first()
+
+        if page is None:
+            # TODO cute 404
+            return 'Page not found for {} or homepage not set'.format(url)
 
         contents = 'empty'
         if page is not None:
