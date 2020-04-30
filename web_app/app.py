@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_security import SQLAlchemyUserDatastore
 
 from models import db, Page, Menu
 from views import PageModelView
@@ -14,11 +15,14 @@ def create_app():
     # file config diambil dari file mode py
     app.config.from_pyfile('settings.py')
 
+    db.init_app(app)
+
     admin = Admin(app, name='Flask-01', template_mode='bootstrap3')
     admin.add_view(PageModelView(Page, db.session))
     admin.add_view(ModelView(Menu, db.session))
 
-    db.init_app(app)
+    # we tell to flask security that there will be a connection from the admin flask to this app via sqlalchemy
+    user_datastore =  SQLAlchemyUserDatastore
     # "route" alamat url yang akan ditangani oleh app ini
     @app.route('/') #decorator(akan memastikan fungsi index akan bisa dipanggil oleh flask)
     @app.route('/<url>') #index defined handles without arguments and with argument
