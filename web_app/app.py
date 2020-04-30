@@ -2,8 +2,8 @@ from flask import Flask, render_template
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
-from web_app.models import db, Page, Menu
-from web_app.views import PageModelView
+from models import db, Page, Menu
+from views import PageModelView
 
 
 def create_app():
@@ -25,10 +25,10 @@ def create_app():
     def index(url=None):
         print('here',url)
         if url is not None:
-            # /about
+            # ex /about
             page = Page.query.filter_by(url=url).first()             # connect to database use sqlalchemy
         else:
-            # /
+            # ex /
             page = Page.query.filter_by(is_homepage=True).first()
 
         if page is None:
