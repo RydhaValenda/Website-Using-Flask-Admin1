@@ -19,6 +19,7 @@ class PageModelView(ModelView):
     form_overrides = dict(contents=CKEditorField)
     create_template = 'admin/ckeditor.html'
     edit_template = 'admin/ckeditor.html'
+    column_list = ('title','url')
 
     # form_columns = ('title', 'contents', 'url')
 # tidak bisa melakukan extend dari template yg ada

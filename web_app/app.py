@@ -29,7 +29,6 @@ def create_app():
         contents = 'empty'
         if page is not None:
             contents = page.contents
-
         menu = Menu.query.order_by('order')
 
         return render_template('index.html', TITLE='Flask-01', CONTENT=contents, menu=menu)
