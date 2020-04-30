@@ -1,9 +1,10 @@
 from flask import Flask, render_template
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from flask_security import SQLAlchemyUserDatastore
+from flask_login import login_required
+from flask_security import SQLAlchemyUserDatastore, Security
 
-from models import db, Page, Menu
+from models import db, Page, Menu, User, Role
 from views import PageModelView
 
 
@@ -22,7 +23,9 @@ def create_app():
     admin.add_view(ModelView(Menu, db.session))
 
     # we tell to flask security that there will be a connection from the admin flask to this app via sqlalchemy
-    user_datastore =  SQLAlchemyUserDatastore
+    user_datastore =  SQLAlchemyUserDatastore(db,  User, Role)
+    security = Security(app, user_datastore)
+
     # "route" alamat url yang akan ditangani oleh app ini
     @app.route('/') #decorator(akan memastikan fungsi index akan bisa dipanggil oleh flask)
     @app.route('/<url>') #index defined handles without arguments and with argument
@@ -45,6 +48,13 @@ def create_app():
         menu = Menu.query.order_by('order')
 
         return render_template('index.html', TITLE='Flask-01', CONTENT=contents, menu=menu)
+
+        # @app.route('/rahasia')
+        # create decorator (penanda suatu fungsi)
+    @app.route('/rahasia')
+    @login_required
+    def rahasia():
+        return '<h1>Luke dies!</h1>'
 
         # # connect ke database table
         # import psycopg2
