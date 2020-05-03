@@ -5,7 +5,7 @@ from flask_login import login_required
 from flask_security import SQLAlchemyUserDatastore, Security
 
 from models import db, Page, Menu, User, Role
-from views import PageModelView
+from views import PageModelView, MenuModelView
 
 
 def create_app():
@@ -20,7 +20,7 @@ def create_app():
 
     admin = Admin(app, name='Flask-01', template_mode='bootstrap3')
     admin.add_view(PageModelView(Page, db.session))
-    admin.add_view(ModelView(Menu, db.session))
+    admin.add_view(MenuModelView(Menu, db.session))
 
     # we tell to flask security that there will be a connection from the admin flask to this app via sqlalchemy
     user_datastore =  SQLAlchemyUserDatastore(db,  User, Role)
@@ -56,6 +56,7 @@ def create_app():
     def rahasia():
         return '<h1>Luke dies!</h1>'
 
+    return app
         # # connect ke database table
         # import psycopg2
         #
@@ -95,7 +96,7 @@ def create_app():
     #     con.close()
     #     return 'output table page: {} - {}'. format(id, title)
 
-    return app
+
 
 # # IP "0.0.0.0" bisa dites diinternal network
 # app.run('0.0.0.0', debug=True)

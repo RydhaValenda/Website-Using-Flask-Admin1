@@ -7,3 +7,4 @@ flask-admin
 flask-wtf
 flask-security
 email_validator
+bcrypt
