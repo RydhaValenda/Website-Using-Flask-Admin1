@@ -1,4 +1,5 @@
 from flask import request, url_for
+from flask_admin import AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
 from werkzeug.utils import redirect
@@ -16,6 +17,16 @@ class CKEditorWidget(TextArea):
 
 class CKEditorField(TextAreaField):
     widget = CKEditorWidget()
+
+class SecureAdminIndexView(AdminIndexView):
+    #secure function above
+    def is_accessible(self):
+        return current_user.has_role('admin')
+
+    def inaccessible_callback(self, name, **kwargs):
+        if current_user.is_authenticated:
+            return redirect(request.full_path)
+        return redirect(url_for('security.login', next=request.full_path))
 
 class AdminOnlyView(ModelView):
     #secure function above

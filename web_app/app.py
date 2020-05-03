@@ -3,9 +3,8 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_login import login_required
 from flask_security import SQLAlchemyUserDatastore, Security
-
 from models import db, Page, Menu, User, Role
-from views import PageModelView, MenuModelView
+from views import PageModelView, MenuModelView, SecureAdminIndexView
 
 
 def create_app():
@@ -18,7 +17,7 @@ def create_app():
 
     db.init_app(app)
 
-    admin = Admin(app, name='Flask-01', template_mode='bootstrap3')
+    admin = Admin(app, name='Flask-01', template_mode='bootstrap3', index_view=SecureAdminIndexView())
     admin.add_view(PageModelView(Page, db.session))
     admin.add_view(MenuModelView(Menu, db.session))
 
